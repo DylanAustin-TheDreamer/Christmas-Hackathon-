@@ -28,6 +28,7 @@
   <h2 class="h4 mb-3">What others are wishing for</h2>
 
   <div class="row g-4" id="letters-container"><!-- wrap the whole card grid with "row",g-4 means the gap between cards is 4-->
+    {% if letters %}
     {% for letter in letters %} <!--dkango for loop-->
       <div class="col-md-4"><!--12/4 = 3-->
         <div class="card shadow-sm h-100"><!--BootstrapCard-->
@@ -51,6 +52,7 @@
         </div>
       </div>
     {% endfor %}
+    {% endif %}
   </div>
 <div class="text-center mt-4">
     <button class="btn btn-outline-secondary" id="shuffle-btn">Shuffle Letters</button>
