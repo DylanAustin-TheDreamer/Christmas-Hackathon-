@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="container mt-4">
 
   <!-- Title -->
@@ -26,7 +27,7 @@
 
   <h2 class="h4 mb-3">What others are wishing for</h2>
 
-  <div class="row g-4"><!-- wrap the whole card grid with "row",g-4 means the gap between cards is 4-->
+  <div class="row g-4" id="letters-container"><!-- wrap the whole card grid with "row",g-4 means the gap between cards is 4-->
     {% for letter in letters %} <!--dkango for loop-->
       <div class="col-md-4"><!--12/4 = 3-->
         <div class="card shadow-sm h-100"><!--BootstrapCard-->
@@ -51,6 +52,53 @@
       </div>
     {% endfor %}
   </div>
+<div class="text-center mt-4">
+    <button class="btn btn-outline-secondary" id="shuffle-btn">Shuffle Letters</button>
+</div>
+
+
 
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const container = document.getElementById('letters-container');
+
+    if (!shuffleBtn || !container) return;
+
+    shuffleBtn.addEventListener('click', function () {
+      const cards = Array.from(container.children); // 每個 col-md-4
+
+      
+      cards.forEach(col => {
+        const card = col.querySelector('.card');
+        if (card) {
+          card.classList.add('shuffle-animate');
+        }
+      });
+
+     
+      setTimeout(() => {
+        // Fisher–Yates shuffle
+        let tempCards = Array.from(container.children);
+
+        for (let i = tempCards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          container.appendChild(tempCards[j]); 
+          tempCards.splice(j, 1);
+        }
+
+      
+        cards.forEach(col => {
+          const card = col.querySelector('.card');
+          if (card) {
+            card.classList.remove('shuffle-animate');
+          }
+        });
+      }, 150);
+    });
+  });
+</script>
+
+
 {% endblock %}
