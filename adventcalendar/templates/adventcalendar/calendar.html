@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advent Calendar</title>
+    <link rel="stylesheet" href="{% static 'adventcalendar/styles.css' %}">
+</head> 
+<body>
+    <h1>Advent Calendar</h1>
+    <div class="calendar">
+        {% for day in days %}
+            <div class="day">
+                <a href="{% url 'adventcalendar-day' day.number %}">{{ day.number }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
