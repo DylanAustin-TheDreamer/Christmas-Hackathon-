@@ -76,3 +76,6 @@ docker-compose.dev.yml
 .env.development.local
 .env.test.local
 .env.production.local
+
+#env
+env.py
