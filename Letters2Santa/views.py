@@ -1,13 +1,52 @@
 from django.shortcuts import render
+from django.conf import settings
+from openai import OpenAI
+from .models import Letter
+import os
 
 # Create your views here.
-# of these views here are just basic pageloading
+# these views here are just basic pageloading
 def home(request):
-    letters = range(6)  # Fake 6 letters for display purposes
-    return render(request, "home.html", {"letters": letters})
+    """ This is to navigate to home page """
+
+    # get all letters for the home page by all users
+    letters = Letter.objects.filter(user=request.user)
+    return render(request, 'home.html', {'letters': letters})
 
 def dashboard(request):
+    """ This is to navigate to dashboard """
+
     return render(request, 'dashboard.html')
+
+# This is for handling form request for letters and saving AI response 
+def send_letter(request):
+    """ This is set up so we can send info to the AI via API and save the response in the same view """
+
+    # lets collect form information when user sends letter to santa
+    if request.method == 'POST':
+        letter = request.POST.get('letter')
+        wishlist = request.POST.get('wishlist')
+        # connect to API client
+        client = OpenAI(
+            api_key = settings.GROQ_API_KEY,
+            base_url="https://api.groq.com/openai/v1",
+        )
+        # send data
+        response = client.responses.create(
+            input=f'You have received a letter from someone who thinks you are santa. Read their letter and wish list. Give them a wholesome response! -  {letter} - {wishlist}',
+            model="openai/gpt-oss-20b",
+        )
+        # Gather the response
+        santas_response = response.output_text
+
+        Letter.objects.create(
+            user=request.user,
+            letter=letter,
+            wishlist=wishlist,
+            response=santas_response
+        )
+
+    return render(request, 'home.html')
 
 
 # May use these again if we decide to style all-auth pages
