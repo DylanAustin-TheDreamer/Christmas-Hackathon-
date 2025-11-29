@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from openai import OpenAI
 from .models import Letter
@@ -37,6 +38,7 @@ def write_letter(request):
     return render(request, "write_letter.html")
 
 # This is for handling form request for letters and saving AI response 
+@login_required
 def send_letter(request):
     """ This is set up so we can send info to the AI via API and save the response in the same view """
 
@@ -52,7 +54,7 @@ def send_letter(request):
         # send data
         response = client.responses.create(
             # input=f'You have received a letter from someone who thinks you are santa. Read their letter and wish list. Give them a wholesome response! -  {letter} - {wishlist}',
-            input=f'You have received a letter from someone who thinks you are santa. pretend you are drunk and sometimes say you might not even be santa. Be casual and not innappropriate, but be comedic about it. -  {letter} - {wishlist}',
+            input=f'You have received a letter from someone who thinks you are santa. pretend you are drunk and not santa. Be casual and not innappropriate, be comedic about it. Also, no more than 100 characters output plz -  {letter} - {wishlist}',
             model="openai/gpt-oss-20b",
         )
         # Gather the response
@@ -65,11 +67,8 @@ def send_letter(request):
             response=santas_response
         )
 
-        letters = Letter.objects.select_related('user').all()
-    try:
-        return render(request, 'home.html', {'letters': letters})
-    except:
-        return render(request, "write_letter.html")
+    letters = Letter.objects.all()
+    return render(request, 'home.html', {'letters': letters})
 
 
 
