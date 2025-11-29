@@ -11,7 +11,7 @@ def home(request):
 
     # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
-        letters = Letter.objects.filter(user=request.user)
+        letters = Letter.objects.select_related('user').all()
     except:
         return render(request, 'home.html')
     return render(request, 'home.html', {'letters': letters})
@@ -65,9 +65,12 @@ def send_letter(request):
             response=santas_response
         )
 
-        letters = Letter.objects.filter(user=request.user)
+        letters = Letter.objects.select_related('user').all()
+    try:
+        return render(request, 'home.html', {'letters': letters})
+    except:
+        return render(request, "write_letter.html")
 
-    return render(request, 'home.html', {'letters': letters})
 
 
 # May use these again if we decide to style all-auth pages
