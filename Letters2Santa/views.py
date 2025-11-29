@@ -9,7 +9,7 @@ import os
 def home(request):
     """ This is to navigate to home page """
 
-    # get all letters for the home page by all users
+    # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
         letters = Letter.objects.filter(user=request.user)
     except:
@@ -22,19 +22,19 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def write_letter(request):
-    context = {}
+    # context = {}
     
 
-    if request.method == "POST":
-        wishlist = request.POST.get("wishlist", "")
-        letter = request.POST.get("letter", "")
+    # if request.method == "POST":
+    #     wishlist = request.POST.get("wishlist", "")
+    #     letter = request.POST.get("letter", "")
 
-        #no data base here, fake success
-        context["success"] = True
-        context["wishlist"] = wishlist
-        context["letter"] = letter
+    #     #no data base here, fake success
+    #     context["success"] = True
+    #     context["wishlist"] = wishlist
+    #     context["letter"] = letter
 
-    return render(request, "write_letter.html", context)
+    return render(request, "write_letter.html")
 
 # This is for handling form request for letters and saving AI response 
 def send_letter(request):
@@ -51,7 +51,8 @@ def send_letter(request):
         )
         # send data
         response = client.responses.create(
-            input=f'You have received a letter from someone who thinks you are santa. Read their letter and wish list. Give them a wholesome response! -  {letter} - {wishlist}',
+            # input=f'You have received a letter from someone who thinks you are santa. Read their letter and wish list. Give them a wholesome response! -  {letter} - {wishlist}',
+            input=f'You have received a letter from someone who thinks you are santa. pretend you are drunk and sometimes say you might not even be santa. Be casual and not innappropriate, but be comedic about it. -  {letter} - {wishlist}',
             model="openai/gpt-oss-20b",
         )
         # Gather the response
@@ -64,7 +65,9 @@ def send_letter(request):
             response=santas_response
         )
 
-    return render(request, 'home.html')
+        letters = Letter.objects.filter(user=request.user)
+
+    return render(request, 'home.html', {'letters': letters})
 
 
 # May use these again if we decide to style all-auth pages
