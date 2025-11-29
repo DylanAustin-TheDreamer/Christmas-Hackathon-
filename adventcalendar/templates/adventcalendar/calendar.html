@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <!-- Your Advent Calendar grid goes here -->
+  <h1>Advent Calendar</h1>
+    <div class="calendar">
+        {% for day in days %}
+            <div class="day">
+                <a href="{% url 'adventcalendar-day' day.number %}">{{ day.number }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

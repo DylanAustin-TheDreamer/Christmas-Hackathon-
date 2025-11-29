@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Letters2Santa',
+    'adventcalendar',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
