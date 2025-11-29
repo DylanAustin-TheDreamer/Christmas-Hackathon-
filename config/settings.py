@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -144,3 +146,6 @@ ACCOUNT_RESET_PASSWORD_REDIRECT_URL = '/'
 ACCOUNT_RESET_PASSWORD_DONE_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+
+# For API Key
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
