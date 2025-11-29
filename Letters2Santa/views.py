@@ -22,7 +22,19 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def write_letter(request):
-    return render(request, "write_letter.html")
+    context = {}
+    
+
+    if request.method == "POST":
+        wishlist = request.POST.get("wishlist", "")
+        letter = request.POST.get("letter", "")
+
+        #no data base here, fake success
+        context["success"] = True
+        context["wishlist"] = wishlist
+        context["letter"] = letter
+
+    return render(request, "write_letter.html", context)
 
 # This is for handling form request for letters and saving AI response 
 def send_letter(request):

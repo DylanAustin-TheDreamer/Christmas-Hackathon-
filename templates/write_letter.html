@@ -3,7 +3,11 @@
 {% block content %}
 <div class="container mt-4">
   <h1 class="mb-4">Write your letter to Santa 🎅</h1>
-
+  {% if success %}
+    <div class="alert alert-success" role="alert">
+      Your letter has been sent to Santa (for now, this is just a demo 😉).
+    </div>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
 
@@ -15,8 +19,7 @@
         name="wishlist"
         rows="3"
         placeholder="e.g. a bike, some socks, chocolate..."
-        required
-      ></textarea>
+        required>{{ wishlist }}</textarea>
     </div>
 
     <!-- Letter body -->
@@ -27,8 +30,7 @@
         name="letter"
         rows="5"
         placeholder="Dear Santa..."
-        required
-      ></textarea>
+        required>{{ letter }}</textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">Send to Santa</button>
