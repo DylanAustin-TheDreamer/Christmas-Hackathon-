@@ -10,7 +10,10 @@ def home(request):
     """ This is to navigate to home page """
 
     # get all letters for the home page by all users
-    letters = Letter.objects.filter(user=request.user)
+    try:
+        letters = Letter.objects.filter(user=request.user)
+    except:
+        return render(request, 'home.html')
     return render(request, 'home.html', {'letters': letters})
 
 def dashboard(request):
