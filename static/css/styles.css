@@ -1,0 +1,32 @@
+
+/* Section for navbar */
+.navbar{
+    background-color: #BB1A1D !important;
+}
+.navbar-nav .nav-link{
+    color: white !important;
+    transition: ease-in-out 0.15s;
+}
+.navbar-nav .nav-link:hover{
+    color: rgb(214, 214, 214) !important;
+    transition: ease-in-out 0.15s;
+}
+.navbar-brand{
+    color: white !important;
+    transition: ease-in-out 0.15s;
+}
+.navbar-brand:hover{
+    color: rgb(214, 214, 214) !important;
+    transition: ease-in-out 0.15s;
+}
+/* End of navbar section */
+
+body{
+    background-color: #266A46;
+}
+
+main{
+    background-color: white;
+    padding: 20px;
+    top: 0;
+}
