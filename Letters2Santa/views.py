@@ -21,6 +21,9 @@ def dashboard(request):
 
     return render(request, 'dashboard.html')
 
+def write_letter(request):
+    return render(request, "write_letter.html")
+
 # This is for handling form request for letters and saving AI response 
 def send_letter(request):
     """ This is set up so we can send info to the AI via API and save the response in the same view """
