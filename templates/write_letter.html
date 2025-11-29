@@ -8,7 +8,7 @@
       Your letter has been sent to Santa (for now, this is just a demo 😉).
     </div>
   {% endif %}
-  <form method="post">
+  <form method="post" action="{% url 'send_letter' %}">
     {% csrf_token %}
 
     <!-- Wishlist -->

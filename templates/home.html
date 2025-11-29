@@ -33,21 +33,19 @@
       <div class="col-md-4"><!--12/4 = 3-->
         <div class="card shadow-sm h-100"><!--BootstrapCard-->
           <div class="card-body">
-            <h5 class="card-title">Dear Santa,</h5>
+            <h5 class="card-title">Dear Santa, from {{letter.user}}</h5>
             <p class="card-text">
-              I’ve been really good this year and I’d love to ask for...
+              {{letter.letter}}
             </p>
 
             <p class="fw-bold mb-1">Wishlist:</p>
             <ul class="mb-2">
-              <li>Example item 1</li>
-              <li>Example item 2</li>
-              <li>Example item 3</li>
+              <li>{{letter.wishlist}}</li>
             </ul>
 
             <hr><!--Santa reply block-->
             <p class="small text-muted mb-1">Santa’s reply:</p>
-            <p class="fst-italic mb-0">"Ho ho ho, I’ll see what I can do!"</p>
+            <p class="fst-italic mb-0">{{letter.response}}</p>
           </div>
         </div>
       </div>
