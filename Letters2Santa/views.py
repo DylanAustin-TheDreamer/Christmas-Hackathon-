@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 # of these views here are just basic pageloading
 def home(request):
-    return render(request, 'home.html')
+    letters = range(6)  # Fake 6 letters for display purposes
+    return render(request, "home.html", {"letters": letters})
 
 def dashboard(request):
     return render(request, 'dashboard.html')

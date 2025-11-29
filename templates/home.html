@@ -1,5 +1,56 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
-<h1 class="text-center">Letters to Santa 🎅</h1>
-<p class="text-center text-muted">See what everyone is wishing for this Christmas!</p>
+<div class="container mt-4">
+
+  <!-- Title -->
+  <div class="text-center mb-4">
+    <h1 class="display-5 fw-bold">Letters to Santa 🎅</h1>
+    <p class="text-muted">See what everyone is wishing for this Christmas!</p>
+  </div>
+
+  <!-- Daily festive message (placeholder) -->
+  <div class="alert alert-success text-center" role="alert">
+    <strong>Today's festive message:</strong>
+    <span>Have a magical day full of Christmas spirit!</span>
+  </div>
+
+  <!-- Write letter button -->
+  <div class="text-center mt-4">
+    <a href="#" class="btn btn-primary btn-lg">
+      Write your letter to Santa
+    </a>
+  </div>
+ <!-- Letters wall -->
+  <hr><!-- this is a grey line -->
+
+  <h2 class="h4 mb-3">What others are wishing for</h2>
+
+  <div class="row g-4"><!-- wrap the whole card grid with "row",g-4 means the gap between cards is 4-->
+    {% for letter in letters %} <!--dkango for loop-->
+      <div class="col-md-4"><!--12/4 = 3-->
+        <div class="card shadow-sm h-100"><!--BootstrapCard-->
+          <div class="card-body">
+            <h5 class="card-title">Dear Santa,</h5>
+            <p class="card-text">
+              I’ve been really good this year and I’d love to ask for...
+            </p>
+
+            <p class="fw-bold mb-1">Wishlist:</p>
+            <ul class="mb-2">
+              <li>Example item 1</li>
+              <li>Example item 2</li>
+              <li>Example item 3</li>
+            </ul>
+
+            <hr><!--Santa reply block-->
+            <p class="small text-muted mb-1">Santa’s reply:</p>
+            <p class="fst-italic mb-0">"Ho ho ho, I’ll see what I can do!"</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
 {% endblock %}
