@@ -2,6 +2,16 @@
 
 <!DOCTYPE html>
 <html lang="en">
+  
+<style>
+  .card {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .shuffle-animate {
+    transform: translateY(-4px);  
+    opacity: 0.9;   
+  }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,11 +57,10 @@
 </nav>
     </header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main class="container mt-4">
+      {% block content %}{% endblock %}
     </main>
-
+    
     <footer></footer>
     
     <!-- Script for bootstrap -->

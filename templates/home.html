@@ -1,6 +1,104 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
 
 {% block content %}
+
+<div class="container mt-4">
+
+  <!-- Title -->
+  <div class="text-center mb-4">
+    <h1 class="display-5 fw-bold">Letters to Santa 🎅</h1>
+    <p class="text-muted">See what everyone is wishing for this Christmas!</p>
+  </div>
+
+  <!-- Daily festive message (placeholder) -->
+  <div class="alert alert-success text-center" role="alert">
+    <strong>Today's festive message:</strong>
+    <span>Have a magical day full of Christmas spirit!</span>
+  </div>
+
+  <!-- Write letter button -->
+  <div class="text-center mt-4">
+    <a href="#" class="btn btn-primary btn-lg">
+      Write your letter to Santa
+    </a>
+  </div>
+ <!-- Letters wall -->
+  <hr><!-- this is a grey line -->
+
+  <h2 class="h4 mb-3">What others are wishing for</h2>
+
+  <div class="row g-4" id="letters-container"><!-- wrap the whole card grid with "row",g-4 means the gap between cards is 4-->
+    {% for letter in letters %} <!--dkango for loop-->
+      <div class="col-md-4"><!--12/4 = 3-->
+        <div class="card shadow-sm h-100"><!--BootstrapCard-->
+          <div class="card-body">
+            <h5 class="card-title">Dear Santa,</h5>
+            <p class="card-text">
+              I’ve been really good this year and I’d love to ask for...
+            </p>
+
+            <p class="fw-bold mb-1">Wishlist:</p>
+            <ul class="mb-2">
+              <li>Example item 1</li>
+              <li>Example item 2</li>
+              <li>Example item 3</li>
+            </ul>
+
+            <hr><!--Santa reply block-->
+            <p class="small text-muted mb-1">Santa’s reply:</p>
+            <p class="fst-italic mb-0">"Ho ho ho, I’ll see what I can do!"</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+<div class="text-center mt-4">
+    <button class="btn btn-outline-secondary" id="shuffle-btn">Shuffle Letters</button>
+</div>
+
+
+
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const container = document.getElementById('letters-container');
+
+    if (!shuffleBtn || !container) return;
+
+    shuffleBtn.addEventListener('click', function () {
+      const cards = Array.from(container.children); // 每個 col-md-4
+
+      
+      cards.forEach(col => {
+        const card = col.querySelector('.card');
+        if (card) {
+          card.classList.add('shuffle-animate');
+        }
+      });
+
+     
+      setTimeout(() => {
+        // Fisher–Yates shuffle
+        let tempCards = Array.from(container.children);
+
+        for (let i = tempCards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          container.appendChild(tempCards[j]); 
+          tempCards.splice(j, 1);
+        }
+
+      
+        cards.forEach(col => {
+          const card = col.querySelector('.card');
+          if (card) {
+            card.classList.remove('shuffle-animate');
+          }
+        });
+      }, 150);
+    });
+  });
+</script>
+
 
 {% endblock %}
