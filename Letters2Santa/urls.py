@@ -6,4 +6,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path("write-letter/", views.write_letter, name="write_letter"),
     path('send-letter/', views.send_letter, name="send_letter"),
+    path("api/festive-message/", views.festive_message_api, name="festive_message_api"),
 ]

@@ -13,7 +13,7 @@
   <!-- Daily festive message (placeholder) -->
   <div class="alert alert-success text-center" role="alert">
     <strong>Today's festive message:</strong>
-    <span>Have a magical day full of Christmas spirit!</span>
+    <span id="daily-message-text">Loading festive message</span>
   </div>
 
   <!-- Write letter button -->
@@ -33,7 +33,7 @@
       <div class="col-md-4"><!--12/4 = 3-->
         <div class="card shadow-sm h-100"><!--BootstrapCard-->
           <div class="card-body">
-            <h5 class="card-title">Dear Santa, from {{letter.user.username}}</h5>
+            <h5 class="card-title">Dear Santa, from {{letter.user}}</h5>
             <p class="card-text">
               {{letter.letter}}
             </p>

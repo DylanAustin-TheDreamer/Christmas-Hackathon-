@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from openai import OpenAI
 from .models import Letter
+from django.http import JsonResponse
+import random
 import os
 
 # Create your views here.
@@ -12,7 +14,7 @@ def home(request):
 
     # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
-        letters = Letter.objects.select_related('user').all()
+        letters = Letter.objects.filter(user=request.user)
     except:
         return render(request, 'home.html')
     return render(request, 'home.html', {'letters': letters})
@@ -70,7 +72,18 @@ def send_letter(request):
     letters = Letter.objects.all()
     return render(request, 'home.html', {'letters': letters})
 
+    return render(request, 'home.html', {'letters': letters})
 
+FESTIVE_MESSAGES = [
+    "Have a magical day full of Christmas spirit! ✨",
+    "May your day be merry and bright. 🎄",
+    "Don’t forget to treat yourself today – Santa is watching. 🎅",
+    "One hot chocolate a day keeps the Grinch away. ☕",
+]
+
+def festive_message_api(request):
+    message = random.choice(FESTIVE_MESSAGES)
+    return JsonResponse({"message": message})
 
 # May use these again if we decide to style all-auth pages
 # def login(request):
