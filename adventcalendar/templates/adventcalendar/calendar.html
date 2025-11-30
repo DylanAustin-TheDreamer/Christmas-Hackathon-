@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
+
+{% block extra_css %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'adventcalendar/style.css' %}">
+{% endblock %}
+
 {% block content %}
   <!-- Your Advent Calendar grid goes here -->
-  <h1>Advent Calendar</h1>
-    <div class="calendar">
-        {% for day in days %}
-            <div class="day">
-                <a href="{% url 'adventcalendar-day' day.number %}">{{ day.number }}</a>
+<div class="container mt-5">
+  <h1 class="text-center text-danger mb-4">Advent Calendar</h1>
+  <div class="row row-cols-1 row-cols-md-6 g-4">
+    <!-- Tiles will go here -->
+    {% for day in days %}
+    <div class="col">
+        <div class="card text-center bg-danger text-white {% if day == today %}border-warning shadow-lg{% endif %}" style="cursor:pointer;">
+            <div class="card-body">
+                <h2 class="card-title">{{ day }}</h2>
             </div>
-        {% endfor %}
+        </div>
     </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
