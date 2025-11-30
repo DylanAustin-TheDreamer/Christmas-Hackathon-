@@ -21,12 +21,33 @@
 }
 /* End of navbar section */
 
-body{
-    background-color: #266A46;
-}
 
 main{
     background-color: white;
     padding: 20px;
     top: 0;
+}
+
+body {
+  background: linear-gradient(to bottom, #266A46 0%, #1ad873 40%, #41d586 100%);
+  min-height: 100vh;
+}
+
+#snow-sled {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, #dfffff 0%, #b0e8ff 60%, transparent 100%);
+  box-shadow: 0 0 14px rgba(160, 220, 255, 0.9);
+  transition: transform 0.15s ease-out;
+  z-index: 9999;
+}
+
+
+
+main.container {
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.75) !important;
 }

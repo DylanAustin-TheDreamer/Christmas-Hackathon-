@@ -2,76 +2,84 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <style>
   .card {
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
+
   .shuffle-animate {
-    transform: translateY(-4px);  
-    opacity: 0.9;   
+    transform: translateY(-4px);
+    opacity: 0.9;
   }
 </style>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letters2Santa</title>
-    <!-- Style sheet for bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="{% static 'css/styles.css'%}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letters2Santa</title>
+  <!-- Style sheet for bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="{% static 'css/styles.css'%}" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'home' %}">L2S</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-        </li>
-        <!-- Showing what pages are available based on user login state handled by django all-auth -->
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'adventcalendar-home' %}">Advent Calendar</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'account_signup' %}">Sign-up</a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</nav>
-    </header>
+  <div id="snow-sled"></div>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">L2S</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+            </li>
+            <!-- Showing what pages are available based on user login state handled by django all-auth -->
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'adventcalendar-home' %}">Advent Calendar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_signup' %}">Sign-up</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-    <main class="container">
-      {% block content %}{% endblock %}
-    </main>
-    
-    <footer></footer>
-    
-    <!-- Script for bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const messageEl = document.getElementById("daily-message-text");
-        if (!messageEl) return;  // If the element is not found, exit
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
 
-        fetch("/api/festive-message/")
+  <footer></footer>
+
+  <!-- Script for bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // ====== Festive message API fetch ======
+      const messageEl = document.getElementById("daily-message-text");
+      if (messageEl) {
+        fetch("/api/festive-message/?t=" + new Date().getTime())
           .then(response => response.json())
           .then(data => {
             if (data.message) {
@@ -84,8 +92,24 @@
             console.error("Error fetching festive message:", error);
             messageEl.textContent = "Have a magical day full of Christmas spirit!";
           });
-      });
-    </script>
+      }
+
+      // ====== Mouse snow-sled effect ======
+      const sled = document.getElementById("snow-sled");
+      if (sled) {
+        document.addEventListener("mousemove", function (event) {
+          const x = event.clientX;
+          const y = event.clientY;
+
+          const offsetX = x - 9; // 半徑的一半
+          const offsetY = y - 9;
+
+          sled.style.transform = "translate3d(" + offsetX + "px, " + offsetY + "px, 0)";
+        });
+      }
+    });
+  </script>
 
 </body>
+
 </html>
