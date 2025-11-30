@@ -1,11 +1,24 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+  
+<style>
+  .card {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .shuffle-animate {
+    transform: translateY(-4px);  
+    opacity: 0.9;   
+  }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letters2Santa</title>
     <!-- Style sheet for bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="{% static 'css/styles.css'%}" rel="stylesheet">
 
     <!-- New app CSS Style Sheet block -->
     {% block extra_css %}{% endblock %}
@@ -15,14 +28,14 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="{% url 'home' %}">L2S</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         <!-- Showing what pages are available based on user login state handled by django all-auth -->
         {% if user.is_authenticated %}
@@ -49,9 +62,8 @@
 </nav>
     </header>
 
-    <main>
-    {% block content %}
-    {% endblock %}
+    <main class="container">
+      {% block content %}{% endblock %}
     </main>
     
     <footer></footer>
