@@ -66,5 +66,26 @@
     
     <!-- Script for bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const messageEl = document.getElementById("daily-message-text");
+        if (!messageEl) return;  // If the element is not found, exit
+
+        fetch("/api/festive-message/")
+          .then(response => response.json())
+          .then(data => {
+            if (data.message) {
+              messageEl.textContent = data.message;
+            } else {
+              messageEl.textContent = "Have a magical day full of Christmas spirit!";
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching festive message:", error);
+            messageEl.textContent = "Have a magical day full of Christmas spirit!";
+          });
+      });
+    </script>
+
 </body>
 </html>
