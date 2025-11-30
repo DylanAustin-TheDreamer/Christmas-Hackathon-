@@ -24,6 +24,10 @@ def dashboard(request):
 
     return render(request, 'dashboard.html')
 
+def test(request):
+    """ This is to navigate to test page """
+
+    return render(request, 'test.html')
 def write_letter(request):
     # context = {}
     
