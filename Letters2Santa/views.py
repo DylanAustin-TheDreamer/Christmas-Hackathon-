@@ -17,9 +17,10 @@ def home(request):
     # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
         letters = Letter.objects.all()
+        user_letters = Letter.objects.filter(request.user)
     except:
         return render(request, 'home.html')
-    return render(request, 'home.html', {'letters': letters})
+    return render(request, 'home.html', {'letters': letters, 'user_letters' : user_letters})
 
 def dashboard(request):
     """ This is to navigate to dashboard """
