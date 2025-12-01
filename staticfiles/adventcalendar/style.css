@@ -1,0 +1,6 @@
+/* Custom styles for advent calendar */
+
+/* Make cards have a pointer cursor on hover */
+.card {
+  cursor: pointer;
+}
