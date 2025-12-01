@@ -13,7 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-import env
+try:
+    import env
+    ENV_AVAILABLE = True
+except ImportError:
+    ENV_AVAILABLE = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,8 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-umywb$l6pfyh76x81g5a707d$9k7hcbjz24ae2picx1$&0^1ks'
+SECRET_KEY = (
+    env.SECRET_KEY if 'env' in globals() and hasattr(env, 'SECRET_KEY') else os.environ.get('SECRET_KEY', 'pineapples')
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -147,5 +152,7 @@ ACCOUNT_RESET_PASSWORD_DONE_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 
-# For API Key
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+if ENV_AVAILABLE and hasattr(env, 'GROQ_API_KEY'):
+    GROQ_API_KEY = env.GROQ_API_KEY
+else:
+    GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
