@@ -63,7 +63,8 @@ def send_letter(request):
         )
 
     letters = Letter.objects.all()
-    return render(request, 'home.html', {'letters': letters})
+    user_letters = Letter.objects.filter(request.user)
+    return render(request, 'home.html', {'letters': letters, 'user_letters' : user_letters})
 
 FESTIVE_MESSAGES = [
     "Have a magical day full of Christmas spirit! ✨",
