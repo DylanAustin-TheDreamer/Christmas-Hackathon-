@@ -1,3 +1,5 @@
+let calendarDays = document.querySelectorAll('.calendar')
+
 // Get today's date
 const today = new Date();
 
@@ -10,4 +12,10 @@ const diffTime = christmas - today;
 // convert milliseconds to days is what the below code is about
 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-console.log(`Days until Christmas: ${diffDays}`);
+const remainderDays = 25 - diffDays;
+
+// loop through elements in calendar days and null days past
+for (let i = 0; i < remainderDays && i < calendarDays.length; i++) {
+    calendarDays[i].classList.remove('calendar');
+    calendarDays[i].classList.add('calendar-mute');
+}

@@ -119,3 +119,29 @@ main.container {
 .card:hover {
   transform: translateY(-4px) scale(1.02);
 }
+
+/* this to style the days in the calendar */
+.day{
+  color: white;
+  font-size: 20px;
+}
+.calendar{
+  width: 80px; 
+  height: 80px; 
+  background: linear-gradient(90deg, rgb(61, 190, 44) 0%, rgb(209, 236, 208) 100%);
+  border-radius: 4px;
+  transition: ease-in-out 0.3s;
+}
+.calendar:hover{
+  width: 84px; 
+  height: 84px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgb(190, 54, 44) 0%, rgb(253, 253, 253) 100%);
+  transition: ease-in-out 0.3s;
+}
+.calendar-mute{
+  width: 80px; 
+  height: 80px; 
+  background-color:grey;
+  border-radius: 4px;
+}

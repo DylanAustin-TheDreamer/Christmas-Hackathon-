@@ -17,11 +17,19 @@
   </div>
 
   <!-- Write letter button -->
+   {% if user.is_authenticated %}
   <div class="text-center mt-4">
     <a href="{% url 'write_letter' %}" class="btn btn-primary btn-lg">
       Write your letter to Santa
     </a>
   </div>
+  {% else %}
+  <div class="text-center mt-4">
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+      Login now to send a letter!
+    </a>
+  </div>
+  {% endif %}
  <!-- Letters wall -->
   <hr><!-- this is a grey line -->
 
@@ -31,8 +39,8 @@
     {% if letters %}
     {% for letter in letters %} <!--dkango for loop-->
       <div class="col-md-4"><!--12/4 = 3-->
-        <div class="card shadow-sm h-100"><!--BootstrapCard-->
-          <div class="card-body">
+        <div class="card shadow-sm h-100" style="border: dotted 2px red; border-radius: 8px;"><!--BootstrapCard-->
+          <div class="card-body" >
             <h5 class="card-title">Dear Santa, from {{letter.user}}</h5>
             <p class="card-text">
               {{letter.letter}}
