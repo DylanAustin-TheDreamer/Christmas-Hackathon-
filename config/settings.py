@@ -33,7 +33,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["christmas-hackathon-a77bbb0c123e.herokuapp.com'"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "christmas-hackathon-a77bbb0c123e.herokuapp.com"]
 
 
 # Application definition
