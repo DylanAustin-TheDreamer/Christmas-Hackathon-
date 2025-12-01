@@ -48,7 +48,7 @@ def send_letter(request):
         # send data
         response = client.responses.create(
             # input=f'You have received a letter from someone who thinks you are santa. Read their letter and wish list. Give them a wholesome response! -  {letter} - {wishlist}',
-            input=f'You have received a letter from someone who thinks you are santa. pretend you are drunk and not santa. Be casual and not innappropriate, be comedic about it. Also, no more than 100 characters output plz -  {letter} - {wishlist}',
+            input=f'You have received a letter from someone who thinks you are santa. pretend you are too drunk and be really funny. Also, no more than 250 characters output plz -  {letter} - {wishlist}',
             model="openai/gpt-oss-20b",
         )
         # Gather the response
