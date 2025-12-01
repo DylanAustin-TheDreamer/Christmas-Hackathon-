@@ -80,7 +80,7 @@ from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm, Chan
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST, request=request)
+        form = LoginForm(request.POST or None)
         if form.is_valid():
             user = authenticate(
                 request,
@@ -96,7 +96,7 @@ def login(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST or None, request=request)
+        form = SignupForm(request.POST or None)
         if form.is_valid():
             user = form.save(request)
             auth_login(request, user)
@@ -110,7 +110,7 @@ def logout(request):
 
 def change_password(request):
     if request.method == 'POST':
-        form = ChangePasswordForm(request.user, request.POST or None, request=request)
+        form = ChangePasswordForm(request.user, request.POST or None)
         if form.is_valid():
             form.save()
             return redirect('home.html')
@@ -120,7 +120,7 @@ def change_password(request):
 
 def reset_password(request):
     if request.method == 'POST':
-        form = ResetPasswordForm(request.POST or None, request=request)
+        form = ResetPasswordForm(request.POST or None)
         if form.is_valid():
             form.save(request)
             return redirect('home.html')
