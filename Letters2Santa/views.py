@@ -17,9 +17,10 @@ def home(request):
     # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
         letters = Letter.objects.all()
+        user_letters = Letter.objects.filter(request.user)
     except:
         return render(request, 'home.html')
-    return render(request, 'home.html', {'letters': letters})
+    return render(request, 'home.html', {'letters': letters, 'user_letters' : user_letters})
 
 def dashboard(request):
     """ This is to navigate to dashboard """
@@ -48,7 +49,7 @@ def send_letter(request):
         # send data
         response = client.responses.create(
             # input=f'You have received a letter from someone who thinks you are santa. Read their letter and wish list. Give them a wholesome response! -  {letter} - {wishlist}',
-            input=f'You have received a letter from someone who thinks you are santa. pretend you are drunk and not santa. Be casual and not innappropriate, be comedic about it. Also, no more than 100 characters output plz -  {letter} - {wishlist}',
+            input=f'You have received a letter from someone who thinks you are santa. pretend you are too drunk and be really funny. Also, no more than 250 characters output plz -  {letter} - {wishlist}',
             model="openai/gpt-oss-20b",
         )
         # Gather the response
@@ -62,7 +63,8 @@ def send_letter(request):
         )
 
     letters = Letter.objects.all()
-    return render(request, 'home.html', {'letters': letters})
+    user_letters = Letter.objects.filter(request.user)
+    return render(request, 'home.html', {'letters': letters, 'user_letters' : user_letters})
 
 FESTIVE_MESSAGES = [
     "Have a magical day full of Christmas spirit! ✨",
