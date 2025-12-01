@@ -14,7 +14,7 @@ def home(request):
 
     # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
-        letters = Letter.objects.filter(user=request.user)
+        letters = Letter.objects.all()
     except:
         return render(request, 'home.html')
     return render(request, 'home.html', {'letters': letters})
@@ -76,8 +76,6 @@ def send_letter(request):
     letters = Letter.objects.all()
     return render(request, 'home.html', {'letters': letters})
 
-    return render(request, 'home.html', {'letters': letters})
-
 FESTIVE_MESSAGES = [
     "Have a magical day full of Christmas spirit! ✨",
     "May your day be merry and bright. 🎄",
@@ -90,26 +88,32 @@ def festive_message_api(request):
     return JsonResponse({"message": message})
 
 # May use these again if we decide to style all-auth pages
-# def login(request):
-#     return render(request, 'account/login.html')
+from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm, ChangePasswordForm
 
-# def signup(request):
-#     return render(request, 'account/signup.html')
+def login(request):
+    form = LoginForm()
+    return render(request, 'account/login.html', {'form': form})
 
-# def logout(request):
-#     return render(request, 'account/logout.html')
+def signup(request):
+    form = SignupForm()
+    return render(request, 'account/signup.html', {'form': form})
 
-# def change_password(request):
-#     return render(request, 'account/password_change.html')
+def logout(request):
+    return render(request, 'account/logout.html')
 
-# def reset_password(request):
-#     return render(request, 'account/password_reset.html')
+def change_password(request):
+    form = ChangePasswordForm(request.user)
+    return render(request, 'account/password_change.html', {'form': form})
 
-# def complete_reset_password(request):
-#     return render(request, 'account/password_reset_done.html')
+def reset_password(request):
+    form = ResetPasswordForm()
+    return render(request, 'account/password_reset.html', {'form': form})
 
-# def email_management(request):
-#     return render(request, 'account/email.html')
+def complete_reset_password(request):
+    return render(request, 'account/password_reset_done.html')
 
-# def email_confirmation(request):
-#     return render(request, 'account/email_confirm.html')
+def email_management(request):
+    return render(request, 'account/email.html')
+
+def email_confirmation(request):
+    return render(request, 'account/email_confirm.html')
