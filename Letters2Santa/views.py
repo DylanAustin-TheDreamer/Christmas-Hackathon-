@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login as auth_login
 from django.conf import settings
 from openai import OpenAI
 from .models import Letter
@@ -24,24 +26,10 @@ def dashboard(request):
 
     return render(request, 'dashboard.html')
 
-def test(request):
-    """ This is to navigate to test page """
-
-    return render(request, 'test.html')
 def write_letter(request):
-    # context = {}
-    
+    """ for navigating to the write a letter page """
 
-    # if request.method == "POST":
-    #     wishlist = request.POST.get("wishlist", "")
-    #     letter = request.POST.get("letter", "")
-
-    #     #no data base here, fake success
-    #     context["success"] = True
-    #     context["wishlist"] = wishlist
-    #     context["letter"] = letter
-
-    return render(request, "write_letter.html")
+    return render(request, 'write_letter.html')
 
 # This is for handling form request for letters and saving AI response 
 @login_required
@@ -91,22 +79,53 @@ def festive_message_api(request):
 from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm, ChangePasswordForm
 
 def login(request):
-    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST, request=request)
+        if form.is_valid():
+            user = authenticate(
+                request,
+                username=form.cleaned_data['login'],
+                password=form.cleaned_data['password']
+            )
+            if user is not None:
+                auth_login(request, user)
+                return redirect('home')
+    else:
+        form = LoginForm(request=request)
     return render(request, 'account/login.html', {'form': form})
 
 def signup(request):
-    form = SignupForm()
+    if request.method == 'POST':
+        form = SignupForm(request.POST or None, request=request)
+        if form.is_valid():
+            user = form.save(request)
+            auth_login(request, user)
+            return redirect('home')
+    else:
+        form = SignupForm()
     return render(request, 'account/signup.html', {'form': form})
 
 def logout(request):
     return render(request, 'account/logout.html')
 
 def change_password(request):
-    form = ChangePasswordForm(request.user)
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.user, request.POST or None, request=request)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ChangePasswordForm(request.user)
     return render(request, 'account/password_change.html', {'form': form})
 
 def reset_password(request):
-    form = ResetPasswordForm()
+    if request.method == 'POST':
+        form = ResetPasswordForm(request.POST or None, request=request)
+        if form.is_valid():
+            form.save(request)
+            return redirect('home')
+    else:
+        form = ResetPasswordForm()
     return render(request, 'account/password_reset.html', {'form': form})
 
 def complete_reset_password(request):
