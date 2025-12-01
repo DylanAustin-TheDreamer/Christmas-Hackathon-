@@ -89,7 +89,7 @@ def login(request):
             )
             if user is not None:
                 auth_login(request, user)
-                return redirect('home.html')
+                return redirect('home')
     else:
         form = LoginForm(request=request)
     return render(request, 'account/login.html', {'form': form})
@@ -100,7 +100,7 @@ def signup(request):
         if form.is_valid():
             user = form.save(request)
             auth_login(request, user)
-            return redirect('home.html')
+            return redirect('home')
     else:
         form = SignupForm()
     return render(request, 'account/signup.html', {'form': form})
@@ -113,7 +113,7 @@ def change_password(request):
         form = ChangePasswordForm(request.user, request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('home.html')
+            return redirect('home')
     else:
         form = ChangePasswordForm(request.user)
     return render(request, 'account/password_change.html', {'form': form})
@@ -123,7 +123,7 @@ def reset_password(request):
         form = ResetPasswordForm(request.POST or None)
         if form.is_valid():
             form.save(request)
-            return redirect('home.html')
+            return redirect('home')
     else:
         form = ResetPasswordForm()
     return render(request, 'account/password_reset.html', {'form': form})
