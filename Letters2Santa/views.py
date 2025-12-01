@@ -17,7 +17,7 @@ def home(request):
     # get all letters for the home page made by current user - needs to change to all users created in the database
     try:
         letters = Letter.objects.all()
-        user_letters = Letter.objects.filter(request.user)
+        user_letters = Letter.objects.filter(user=request.user)
     except:
         return render(request, 'home.html')
     return render(request, 'home.html', {'letters': letters, 'user_letters' : user_letters})
@@ -63,7 +63,7 @@ def send_letter(request):
         )
 
     letters = Letter.objects.all()
-    user_letters = Letter.objects.filter(request.user)
+    user_letters = Letter.objects.filter(user=request.user)
     return render(request, 'home.html', {'letters': letters, 'user_letters' : user_letters})
 
 FESTIVE_MESSAGES = [
